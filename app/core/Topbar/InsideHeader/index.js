@@ -91,7 +91,7 @@ const InsideHeader = () => {
               <HorizontalNav/>
             </div>
             <ul className="gx-header-notifications gx-ml-auto">
-              <li className="gx-notify gx-notify-search">
+              {/* <li className="gx-notify gx-notify-search">
                 <Popover overlayClassName="gx-popover-horizantal"
                          placement="bottomRight" content={
                   <div className="gx-d-flex"><Dropdown overlay={menu}>
@@ -108,16 +108,16 @@ const InsideHeader = () => {
                   <span className="gx-pointer gx-d-block"><i className="icon icon-search-new"/></span>
 
                 </Popover>
-              </li>
+              </li> */}
 
-              <li className="gx-notify">
+              {/* <li className="gx-notify">
                 <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight" content={<AppNotification/>}
                          trigger="click">
                   <span className="gx-pointer gx-d-block"><i className="icon icon-notification"/></span>
                 </Popover>
-              </li>
+              </li> */}
 
-              <li className="gx-msg">
+              {/* <li className="gx-msg">
                 <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight"
                          content={<MailNotification/>} trigger="click">
                 <span className="gx-pointer gx-status-pos gx-d-block">
@@ -125,7 +125,7 @@ const InsideHeader = () => {
                 <span className="gx-status gx-status-rtl gx-small gx-orange"/>
                 </span>
                 </Popover>
-              </li>
+              </li> */}
               <li className="gx-language">
                 <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight"
                          content={languageMenu()} trigger="click">

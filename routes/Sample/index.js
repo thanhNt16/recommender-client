@@ -1,11 +1,27 @@
-import React from 'react';
+import React from "react";
+import { Col, Row } from "antd";
+import AlgorithmsCard from "./components/AlgorithmsCard";
+import Building from "./components/Building";
+import { algorithms } from "./configuration";
 
 const SamplePage = () => {
-	return (
-		<div>
-			HI, This is a sample page so you can start from here
-		</div>
-	);
+  return (
+    <div>
+      <Row>
+        {algorithms.map((algo) => {
+          return (
+            <Col id={algo.id} xs={24} md={8}>
+              <AlgorithmsCard
+                title={algo.title}
+                description={algo.description}
+                image={algo.image}
+              />
+            </Col>
+          );
+        })}
+      </Row>
+    </div>
+  );
 };
 
 export default SamplePage;

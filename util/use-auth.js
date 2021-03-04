@@ -42,33 +42,36 @@ const useProvideAuth = () => {
 
   const userLogin = (data, callbackFun) => {
     fetchStart();
-    httpClient.post('auth/login', data)
+    httpClient.post('auth/signIn', data)
       .then(({data}) => {
-        if (data.result) {
+        if (data) {
           fetchSuccess();
-          httpClient.defaults.headers.common['Authorization'] = 'Bearer ' + data.token.access_token;
+          httpClient.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
           const cookies = new Cookies();
-          cookies.set('token', data.token.access_token);
+          cookies.set('token', data.token);
           getAuthUser();
           if (callbackFun) callbackFun();
         } else {
+          console.log(data)
           fetchError(data.error);
         }
       })
       .catch(function (error) {
-        fetchError(error.message);
+        fetchError(error.response.data);
       });
   };
 
   const userSignup = (data, callbackFun) => {
     fetchStart();
-    httpClient.post('auth/register', data)
+    console.log(data)
+    httpClient.post('auth/signUp', data)
       .then(({data}) => {
-        if (data.result) {
+
+        if (data) {
           fetchSuccess();
-          httpClient.defaults.headers.common['Authorization'] = 'Bearer ' + data.token.access_token;
+          httpClient.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
           const cookies = new Cookies();
-          cookies.set('token', data.token.access_token);
+          cookies.set('token', data.token);
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
@@ -81,9 +84,9 @@ const useProvideAuth = () => {
 
   const userSignOut = (callbackFun) => {
     fetchStart();
-    httpClient.post('auth/logout')
+    httpClient.post('auth/signOut')
       .then(({data}) => {
-        if (data.result) {
+        if (data.message) {
           fetchSuccess();
           setAuthUser(false);
           httpClient.defaults.headers.common['Authorization'] = '';
@@ -101,10 +104,10 @@ const useProvideAuth = () => {
 
   const getAuthUser = () => {
     fetchStart();
-    httpClient.post("auth/me").then(({data}) => {
-      if (data.user) {
+    httpClient.get("auth/me").then(({data}) => {
+      if (data) {
         fetchSuccess();
-        setAuthUser(data.user);
+        setAuthUser(data);
       } else {
         fetchError(data.error);
       }
@@ -124,9 +127,9 @@ const useProvideAuth = () => {
       const token = cookies.get("token");
       httpClient.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
-      httpClient.post("auth/me").then(({data}) => {
-        if (data.user) {
-          setAuthUser(data.user);
+      httpClient.get("auth/me").then(({data}) => {
+        if (data) {
+          setAuthUser(data);
         }
         setLoadingAuthUser(false);
       }).catch(function (error) {

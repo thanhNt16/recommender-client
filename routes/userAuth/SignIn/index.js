@@ -29,9 +29,9 @@ const SignIn = (props) => {
               <p><IntlMessages id="app.userAuth.bySigning"/></p>
               <p><IntlMessages id="app.userAuth.getAccount"/></p>
             </div>
-            <div className="gx-app-logo">
+            {/* <div className="gx-app-logo">
               <img alt="example" src="/images/logo.png"/>
-            </div>
+            </div> */}
           </div>
           <div className="gx-app-login-content">
             <Form

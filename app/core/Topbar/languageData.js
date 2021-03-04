@@ -6,6 +6,12 @@ const languageData = [
     icon: 'us'
   },
   {
+    languageId: 'vietname',
+    locale: 'vi',
+    name: 'Tiếng Việt',
+    icon: 'vn'
+  },
+  {
     languageId: 'chinese',
     locale: 'zh',
     name: 'Chinese',
