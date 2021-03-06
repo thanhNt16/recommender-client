@@ -12,6 +12,7 @@ const SamplePage = () => {
           return (
             <Col id={algo.id} xs={24} md={8}>
               <AlgorithmsCard
+                id={algo.id}
                 title={algo.title}
                 description={algo.description}
                 image={algo.image}
