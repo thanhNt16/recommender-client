@@ -6,37 +6,59 @@ import {
   SmileOutlined,
 } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
-import { Steps, Divider, Typography, Button, Table } from "antd";
+import { Steps, Divider, Typography, Button, Table, List } from "antd";
 import { useRouter } from "next/router";
 import { Stomp } from "@stomp/stompjs";
 import CardBox from "../../app/components/CardBox";
 import Widget from "../../app/components/Widget";
 import Upload from "./components/upload";
+import { useAuth } from "../../util/use-auth";
 import { algorithims } from "./config";
-import { nextStep, previousStep } from "../../redux/actions/Upload";
-import { useRabbit } from '../../hooks'
+import { nextStep, previousStep, resetStep } from "../../redux/actions/Upload";
+import { useRabbit } from "../../hooks";
 
 const { Step } = Steps;
-const { Paragraph } = Typography;
+const { Paragraph, Text } = Typography;
 
 export default function AlgorithmDetail() {
   const router = useRouter();
-  const client = useRabbit()
+  const client = useRabbit();
   const dispatch = useDispatch();
   const [algo, setAlgo] = useState(null);
+  const [isExplicit, setIsExplicit] = useState(false);
+  const { authUser } = useAuth();
+
   const current = useSelector(({ upload }) => upload.currentStep);
   useEffect(() => {
+    console.log(algorithims.filter((item) => item.id === router.query.id)[0])
     setAlgo(algorithims.filter((item) => item.id === router.query.id)[0]);
   }, [router.query]);
   useEffect(() => {
     if (client) {
-      client.debug = null
-      const subscription = client.subscribe('/queue/test', (message) => {
-        console.log("msg", message.body)
-        message.ack()
-      })
+      client.debug = null;
+      const subscription = client.subscribe(
+        "/queue/status_queue",
+        (message) => {
+          if (message.body && message.body.includes(authUser._id)) {
+            console.log("msg", message.body);
+            const body = message.body.toString().split("|");
+            const msg = body[2];
+            console.log("call api with ", authUser._id, msg);
+            dispatch(nextStep());
+            message.ack();
+          } else {
+            message.nack();
+          }
+        }
+      );
     }
-    
+    return () => {
+      if (client && window.ws && window.ws.readyState === 1) {
+        client.unsubscribe("/queue/status_queue")
+        client.disconnect(() => console.log('disconnected'))  
+      }
+      
+    }
   }, [client]);
 
   function renderDataPreparation(content) {
@@ -70,6 +92,53 @@ export default function AlgorithmDetail() {
       </Widget>
     );
   }
+  function renderUpload(algo) {
+    return (
+      <Widget styleName="gx-card">
+        <Upload isExplicit={isExplicit} setIsExplicit={setIsExplicit} />
+        <Divider />
+        <Button onClick={() => dispatch(previousStep())} type="primary">
+          Previous Step
+        </Button>
+        <Button onClick={() => dispatch(nextStep())} type="primary">
+          Next Step
+        </Button>
+      </Widget>
+    );
+  }
+  function renderResult(algo) {
+    return (
+      <Widget styleName="gx-card">
+        <List
+          header={
+            <div>
+              <Text>API: </Text>
+              <Divider />
+              <Text>
+                Use this API to get list of recommendation product for your user
+              </Text>
+              <br />
+              <Text>{algo.guide}</Text>
+            </div>
+          }
+          bordered
+        >
+          <List.Item>
+            {algo.id === "content" &&
+              `https://app.recengine.tech/content?customer_id=${authUser._id}${algo.params}`}
+            {algo.id === "collaborative" &&
+              `https://app.recengine.tech/collaborative_${
+                isExplicit ? "explicit" : "implicit"
+              }?customer_id=${authUser._id}${algo.params}`}
+          </List.Item>
+        </List>
+        <Divider />
+        <Button onClick={() => dispatch(resetStep())} type="primary">
+          Reset Step
+        </Button>
+      </Widget>
+    );
+  }
 
   return (
     <React.Fragment>
@@ -88,18 +157,8 @@ export default function AlgorithmDetail() {
       </Steps>
       <Divider />
       {current === 0 && algo && renderDataPreparation(algo)}
-      {current === 1 && (
-        <Widget styleName="gx-card">
-          <Upload />
-          <Divider />
-          <Button onClick={() => dispatch(previousStep())} type="primary">
-            Previous Step
-          </Button>
-          <Button onClick={() => dispatch(nextStep())} type="primary">
-            Next Step
-          </Button>
-        </Widget>
-      )}
+      {current === 1 && algo && renderUpload(algo)}
+      {current === 3 && algo && renderResult(algo)}
     </React.Fragment>
   );
 }

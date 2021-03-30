@@ -8,7 +8,6 @@ const UserInfo = () => {
   const userMenuOptions = (
     <ul className="gx-user-popover">
       <li>My Account</li>
-      <li>Connections</li>
       <li onClick={() => userSignOut()}>Logout
       </li>
     </ul>
@@ -16,7 +15,7 @@ const UserInfo = () => {
 
   return authUser ? (
     <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight" content={userMenuOptions} trigger="click">
-      <Avatar src={"/images/images/avatar/domnic-harris.png"} className="gx-avatar gx-pointer" alt=""/>
+      <Avatar src={"/images/default.jpeg"} className="gx-avatar gx-pointer" alt=""/>
     </Popover>
   ) : null
 };

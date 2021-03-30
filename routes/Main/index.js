@@ -4,13 +4,13 @@ import AlgorithmsCard from "./components/AlgorithmsCard";
 import Building from "./components/Building";
 import { algorithms } from "./configuration";
 
-const SamplePage = () => {
+const MainPage = () => {
   return (
     <div>
       <Row>
         {algorithms.map((algo) => {
           return (
-            <Col id={algo.id} xs={24} md={8}>
+            <Col key={algo.id} xs={24} md={8}>
               <AlgorithmsCard
                 id={algo.id}
                 title={algo.title}
@@ -25,4 +25,4 @@ const SamplePage = () => {
   );
 };
 
-export default SamplePage;
+export default MainPage;

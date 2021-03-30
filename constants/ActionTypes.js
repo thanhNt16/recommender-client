@@ -13,3 +13,4 @@ export const HIDE_MESSAGE = 'HIDE_MESSAGE';
 //Upload file const
 export const NEXT_STEP = 'next_step';
 export const PREVIOUS_STEP = 'preivous_step';
+export const RESET_STEP = 'reset_step';

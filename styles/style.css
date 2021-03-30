@@ -30415,7 +30415,7 @@ h6,
 }
 .gx-header-horizontal-dark {
   position: relative;
-  background-color: #2d353c;
+  background-color: #32394F;
   color: #fa8c15;
 }
 .gx-header-horizontal-dark:before {
@@ -33185,6 +33185,7 @@ fieldset[disabled] a.gx-btn {
   font-size: 14px;
 }
 .gx-card-widget {
+  height: 650px;
   -webkit-box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.03);
   -moz-box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.03);
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.03);

@@ -1596,10 +1596,9 @@
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
   integrity sha512-DetpxZw1fzPD5xUBrIAoplLChO2VB8DlL5Gg+I1IR9b2wPqYIca2WSUxL5g1vLeR4MsQq1NeWriXAVffV+U1Fw==
 
-"@stomp/stompjs@^6.1.0":
+"@stomp/stompjs@github:thanhNt16/stompjs#develop":
   version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@stomp/stompjs/-/stompjs-6.1.0.tgz#b77ca240775a7a34289b2c09618e256be761d142"
-  integrity sha512-Bt+whL0V51rSKP35OkgM1yeVu/usunpz5l1VYuoWw8mGsDMNd3W3FpWa4/4eis6QfXO3uteNGfyE21XWn0pGAQ==
+  resolved "https://codeload.github.com/thanhNt16/stompjs/tar.gz/8b16c06981e65a542c01853eb67353913c9b592c"
 
 "@testing-library/dom@*":
   version "7.29.6"

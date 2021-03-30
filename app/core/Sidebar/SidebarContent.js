@@ -62,8 +62,8 @@ const SidebarContent = () => {
             mode="inline">
 
             <Menu.Item key="sample">
-              <Link href="/sample">
-                <a><i className="icon icon-dasbhoard"/><span>Sample</span></a>
+              <Link href="/main">
+                <a><i className="icon icon-dasbhoard"/><span>Main</span></a>
               </Link>
             </Menu.Item>
           </Menu>
