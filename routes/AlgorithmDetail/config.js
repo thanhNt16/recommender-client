@@ -53,15 +53,15 @@ export const algorithims = [
     },
     dataColumns: [
       {
-        title: "itemId",
-        dataIndex: "itemId",
-        key: "itemId",
-        // render: (text) => <span className="gx-link">{text}</span>,
-      },
-      {
         title: "userId",
         dataIndex: "userId",
         key: "userId",
+        // render: (text) => <span className="gx-link">{text}</span>,
+      },
+      {
+        title: "itemId",
+        dataIndex: "itemId",
+        key: "itemId",
         // render: (text) => <span className="gx-link">{text}</span>,
       },
       {
@@ -99,43 +99,64 @@ export const algorithims = [
     guide: 'Pass your_user_id to get top number_of_recommendation for this user',
     params: '&user_id=your_user_id&top=number_of_recommendation'
   },
-  // {
-  //   id: "word2vec",
-  //   intro:
-  //     "You need to prepare a CSV file which suite for Word2vec algorithm.",
-  //   instruction: {
-  //     parent: "The requirement file need to have 3 fields:",
-  //     children: [
-  //       "itemId: The id of your product",
-  //       "content: The text content of your product.( It could be the product name, product description, product category, etc... )",
-  //     ],
-  //   },
-  //   dataColumns: [
-  //     {
-  //       title: "itemId",
-  //       dataIndex: "itemId",
-  //       key: "itemId",
-  //       render: (text) => <span className="gx-link">{text}</span>,
-  //     },
-  //     {
-  //       title: "content",
-  //       dataIndex: "content",
-  //       key: "content",
-  //     },
-  //   ],
-  //   data: [
-  //     {
-  //       key: "1",
-  //       itemId: "1",
-  //       content: "Product 1",
-  //     },
-  //     {
-  //       key: "2",
-  //       itemId: "2",
-  //       content: "Product 2",
-  //     },
-  //   ],
-  //   guide: 'Pass your_user_id to get top number_of_recommendation for this user',
-  //   params: '&user_id=your_user_id&top=number_of_recommendation'
-  // },
+  {
+    id: "sequence",
+    intro:
+      "You need to prepare a CSV file which suite for Sequence-aware algorithm.",
+    instruction: {
+      parent: "The requirement file need to have 3 fields:",
+      children: [
+        "UserId: The id of your user",
+        "itemId: The id of your product",
+        "feedBack: a number to indicate the interaction of user with item. You can use any number. For example: 1",
+      ],
+    },
+    dataColumns: [
+      {
+        title: "userId",
+        dataIndex: "userId",
+        key: "userId",
+        render: (text) => <span className="gx-link">{text}</span>,
+      },
+      {
+        title: "itemId",
+        dataIndex: "itemId",
+        key: "itemId",
+        render: (text) => <span className="gx-link">{text}</span>,
+      },
+      {
+        title: "feedBack",
+        dataIndex: "feedBack",
+        key: "feedBack",
+      },
+    ],
+    data: [
+      {
+        key: "1",
+        userId: 'user 1',
+        itemId: "1",
+        feedBack: "1",
+      },
+      {
+        key: "2",
+        userId: 'user 2',
+        itemId: "2",
+        feedBack: "1",
+      },
+      {
+        key: "3",
+        userId: 'user 1',
+        itemId: "2",
+        feedBack: "1",
+      },
+      {
+        key: "2",
+        userId: 'user 2',
+        itemId: "4",
+        feedBack: "1",
+      },
+    ],
+    guide: 'Pass your_user_id to get top number_of_recommendation for this user',
+    params: '&user_id=your_user_id&top=number_of_recommendation'
+  },
 ];

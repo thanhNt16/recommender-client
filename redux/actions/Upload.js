@@ -64,3 +64,25 @@ export function uploadCollaborative(options, explicit) {
     }
   };
 }
+export function uploadSequence(options) {
+  return async (dispatch) => {
+    const { onSuccess, onError, file, onProgress } = options;
+    const fmData = new FormData();
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        onProgress({ percent: (event.loaded / event.total) * 100 });
+      },
+    };
+    fmData.append("sequence", file);
+    try {
+      await UploadService.uploadSequence(fmData ,config);
+      message.success("Upload success");
+      onSuccess("Upload success");
+      dispatch(nextStep())
+    } catch (error) {
+      message.error("Upload success");
+      onError(error.message);
+    }
+  };
+}

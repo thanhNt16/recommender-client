@@ -130,6 +130,8 @@ export default function AlgorithmDetail() {
               `https://app.recengine.tech/collaborative_${
                 isExplicit ? "explicit" : "implicit"
               }?customer_id=${authUser._id}${algo.params}`}
+              {algo.id === "sequence" &&
+              `https://app.recengine.tech/sequence?customer_id=${authUser._id}${algo.params}`}
           </List.Item>
         </List>
         <Divider />

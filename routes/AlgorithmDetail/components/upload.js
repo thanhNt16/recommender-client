@@ -6,6 +6,7 @@ import { InboxOutlined } from "@ant-design/icons";
 import {
   uploadContent,
   uploadCollaborative,
+  uploadSequence,
 } from "../../../redux/actions/Upload";
 
 const { Dragger } = Upload;
@@ -19,6 +20,7 @@ export default function DnD({ isExplicit, setIsExplicit }) {
     algorithmName === "content" && dispatch(uploadContent(options));
     algorithmName === "collaborative" &&
       dispatch(uploadCollaborative(options, isExplicit));
+    algorithmName === "sequence" && dispatch(uploadSequence(options));
   };
 
   return (
@@ -33,9 +35,9 @@ export default function DnD({ isExplicit, setIsExplicit }) {
       </Dragger>
       {algorithmName === "collaborative" && (
         <Tooltip title="Check this if you have rating score">
-        <Checkbox  onChange={(e) => setIsExplicit(e.target.checked)}>
-          Is Explicit
-        </Checkbox>
+          <Checkbox onChange={(e) => setIsExplicit(e.target.checked)}>
+            Is Explicit
+          </Checkbox>
         </Tooltip>
       )}
     </React.Fragment>
