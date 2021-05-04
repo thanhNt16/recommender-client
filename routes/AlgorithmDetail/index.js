@@ -30,16 +30,20 @@ export default function AlgorithmDetail() {
 
   const current = useSelector(({ upload }) => upload.currentStep);
   useEffect(() => {
-    console.log(algorithims.filter((item) => item.id === router.query.id)[0])
+    console.log(algorithims.filter((item) => item.id === router.query.id)[0]);
     setAlgo(algorithims.filter((item) => item.id === router.query.id)[0]);
   }, [router.query]);
   useEffect(() => {
-    if (client) {
+    if ((client, algo)) {
       client.debug = null;
       const subscription = client.subscribe(
         "/queue/status_queue",
         (message) => {
-          if (message.body && message.body.includes(authUser._id)) {
+          if (
+            message.body &&
+            message.body.includes(authUser._id) &&
+            message.body.includes(algo)
+          ) {
             console.log("msg", message.body);
             const body = message.body.toString().split("|");
             const msg = body[2];
@@ -54,12 +58,11 @@ export default function AlgorithmDetail() {
     }
     return () => {
       if (client && window.ws && window.ws.readyState === 1) {
-        client.unsubscribe("/queue/status_queue")
-        client.disconnect(() => console.log('disconnected'))  
+        client.unsubscribe("/queue/status_queue");
+        client.disconnect(() => console.log("disconnected"));
       }
-      
-    }
-  }, [client]);
+    };
+  }, [client, algo]);
 
   function renderDataPreparation(content) {
     return (
@@ -125,13 +128,13 @@ export default function AlgorithmDetail() {
         >
           <List.Item>
             {algo.id === "content" &&
-              `https://app.recengine.tech/content?customer_id=${authUser._id}${algo.params}`}
+              `https://app.recengine.games/content?customer_id=${authUser._id}${algo.params}`}
             {algo.id === "collaborative" &&
-              `https://app.recengine.tech/collaborative_${
+              `https://app.recengine.games/collaborative_${
                 isExplicit ? "explicit" : "implicit"
               }?customer_id=${authUser._id}${algo.params}`}
-              {algo.id === "sequence" &&
-              `https://app.recengine.tech/sequence?customer_id=${authUser._id}${algo.params}`}
+            {algo.id === "sequence" &&
+              `https://app.recengine.games/sequence?customer_id=${authUser._id}${algo.params}`}
           </List.Item>
         </List>
         <Divider />

@@ -14,3 +14,17 @@ export const HIDE_MESSAGE = 'HIDE_MESSAGE';
 export const NEXT_STEP = 'next_step';
 export const PREVIOUS_STEP = 'preivous_step';
 export const RESET_STEP = 'reset_step';
+
+//get scenario const
+export const SET_PAGE = 'set_page';
+export const SET_SCENARIO = 'set_scenario';
+
+
+//visualization const
+export const SET_SEQUENCES = 'set_sequences';
+export const SET_COLLABORATIVE = 'set_collaborative';
+
+
+//get page const
+export const SET_PAGE_DATA = 'set_page_data';
+export const SET_ITEMS = 'set_items';

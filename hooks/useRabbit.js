@@ -5,7 +5,7 @@ export function useRabbit() {
   const [client, setClient] = useState(null);
   useEffect(() => {
     var stompClient = Stomp.over(function () {
-      return new WebSocket("wss://rabbitmq.recengine.tech/ws")
+      return new WebSocket("wss://rabbit.recengine.games/ws")
     });
     
     var on_connect = function () {
@@ -13,8 +13,8 @@ export function useRabbit() {
       //   client.debug = null
       setClient(stompClient);
     };
-    var on_error = function () {
-      console.log("error");
+    var on_error = function (error) {
+      console.log("error", error);
     };
     stompClient.connect("rabbitmq", "rabbitmq", on_connect, on_error, "/");
     stompClient.debug = function (str) {};
@@ -25,7 +25,7 @@ export function useRabbit() {
     // stompClient.onDisconnect(() => console.log('disconnected'))
     stompClient.onChangeState(function () {
       if (window.ws.readyState === 2) {
-        var retryws = new WebSocket("wss://rabbitmq.recengine.tech/ws");
+        var retryws = new WebSocket("wss://rabbit.recengine.games/ws");
         stompClient = Stomp.over(retryws);
         stompClient.connect("rabbitmq", "rabbitmq", on_connect, on_error, "/");
       }

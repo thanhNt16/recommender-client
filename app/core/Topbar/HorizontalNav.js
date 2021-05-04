@@ -52,6 +52,34 @@ const HorizontalNav = () => {
           </AppLink>
         </Menu.Item>
       </SubMenu>
+      <SubMenu
+        popupClassName={getNavStyleSubMenuClass(navStyle)}
+        key="scenario"
+        // title={<IntlMessages id="sidebar.main" />}
+        title="Scenario"
+      >
+        <Menu.Item key="scenario">
+          <AppLink href="/scenario">
+            <i className="icon icon-crypto" />
+            {/* <IntlMessages id="sidebar.scenario" /> */}
+            Scenario
+          </AppLink>
+        </Menu.Item>
+      </SubMenu>
+      <SubMenu
+        popupClassName={getNavStyleSubMenuClass(navStyle)}
+        key="Visualization"
+        // title={<IntlMessages id="sidebar.main" />}
+        title="Visualization"
+      >
+        <Menu.Item key="visualization">
+          <AppLink href="/visualization">
+            <i className="icon icon-chart" />
+            {/* <IntlMessages id="sidebar.scenario" /> */}
+            visualization
+          </AppLink>
+        </Menu.Item>
+      </SubMenu>
     </Menu>
   );
 };
