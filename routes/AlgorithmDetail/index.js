@@ -34,7 +34,7 @@ export default function AlgorithmDetail() {
     setAlgo(algorithims.filter((item) => item.id === router.query.id)[0]);
   }, [router.query]);
   useEffect(() => {
-    if ((client, algo)) {
+    if ((client && algo)) {
       client.debug = null;
       const subscription = client.subscribe(
         "/queue/status_queue",
