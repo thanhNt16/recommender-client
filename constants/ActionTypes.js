@@ -17,7 +17,9 @@ export const RESET_STEP = 'reset_step';
 
 //get scenario const
 export const SET_PAGE = 'set_page';
+export const SET_SCENARIOS = 'set_scenarios';
 export const SET_SCENARIO = 'set_scenario';
+export const SET_SAMPLE_SCENARIO = 'set_sample_scenario';
 
 
 //visualization const

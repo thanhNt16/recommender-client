@@ -19,7 +19,6 @@ export default function tab3() {
   }, []);
 
   const dispatch = useDispatch();
-
   return (
     <div>
       <div>Step 3: View scenario</div>

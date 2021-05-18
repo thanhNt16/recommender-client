@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card, Radio, Tabs, Form, Input, Button, Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { createScenario } from "../../../redux/actions/Scenario";
+import { useRouter } from 'next/router'
+import { createScenario, updateScenarioById } from "../../../redux/actions/Scenario";
 import { getPage } from "../../../redux/actions/Page";
 
 import { useAuth } from "../../../util/use-auth";
@@ -12,11 +13,27 @@ const { Option } = Select;
 
 export default function tab2() {
   const { authUser } = useAuth();
+  const router = useRouter()
+
+  const [form] = Form.useForm();
+  const id = router.query.id
+
   const listPages = useSelector(({ scenario }) => scenario.listPages)
   const [pages, setPages] = useState([])
   useEffect(() => {
     dispatch(getPage())
   }, [])
+
+  const scenario = useSelector(({scenario}) => scenario.scenario)
+
+  useEffect(() => {
+    if (scenario) {
+      form.setFieldsValue({
+        name: scenario.name,
+        page: scenario.page
+      })
+    }
+  }, [scenario])
 
   useEffect(() => {
     if (listPages.length !== 0) {
@@ -35,10 +52,17 @@ export default function tab2() {
     console.log("Failed:", errorInfo);
   };
   const onFinish = (values) => {
-    dispatch(
+    id === 'new' ? dispatch(
       createScenario({
         name: values.name,
         page: values.page.join(','),
+        customerid: authUser._id,
+      })
+    ) : dispatch(
+      updateScenarioById({
+        id: scenario._id,
+        name: values.name,
+        page: values.page,
         customerid: authUser._id,
       })
     );
@@ -50,6 +74,7 @@ export default function tab2() {
         You can add your existed page to this scenario
       </div>
       <Form
+        form={form}
         initialValues={{ remember: true }}
         name="basic"
         onFinish={onFinish}
@@ -60,6 +85,7 @@ export default function tab2() {
         <Form.Item
           rules={[{ required: true, message: "this field is required" }]}
           name="name"
+          
         >
           <Input placeholder="Name" />
         </Form.Item>
@@ -86,7 +112,7 @@ export default function tab2() {
         </Form.Item>
         <Form.Item>
           <Button type="primary" className="gx-mb-0" htmlType="submit">
-            Add
+            {id === 'new' ? 'Add' : 'Update'}
           </Button>
         </Form.Item>
       </Form>

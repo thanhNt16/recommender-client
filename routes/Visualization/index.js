@@ -72,15 +72,19 @@ const seriesData = [{
     name: '',
     data: []
   }]
+
 export default function Visualization() {
     const dispatch = useDispatch()
     const sequences = useSelector(({ visualization }) => visualization.sequences)
+
     const [series, setSeries] = useState(seriesData)
     const [option, setOption] = useState(options)
-    
+
     useEffect(() => {
         dispatch(Actions.getSequence())
+
     }, [])
+
 
     useEffect(() => {
         if (sequences && sequences.length !== 0) {

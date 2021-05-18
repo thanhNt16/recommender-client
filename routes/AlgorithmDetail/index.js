@@ -5,6 +5,7 @@ import {
   LoadingOutlined,
   SmileOutlined,
 } from "@ant-design/icons";
+import _ from 'lodash'
 import { useSelector, useDispatch } from "react-redux";
 import { Steps, Divider, Typography, Button, Table, List } from "antd";
 import { useRouter } from "next/router";
@@ -34,24 +35,20 @@ export default function AlgorithmDetail() {
     setAlgo(algorithims.filter((item) => item.id === router.query.id)[0]);
   }, [router.query]);
   useEffect(() => {
-    if ((client && algo)) {
+    if ((client && algo && authUser)) {
       client.debug = null;
       const subscription = client.subscribe(
         "/queue/status_queue",
         (message) => {
-          if (
-            message.body &&
-            message.body.includes(authUser._id) &&
-            message.body.includes(algo)
-          ) {
-            console.log("msg", message.body);
-            const body = message.body.toString().split("|");
-            const msg = body[2];
-            console.log("call api with ", authUser._id, msg);
-            dispatch(nextStep());
-            message.ack();
+          const body = message.body.toString()
+          console.log("msg" , message.headers, message);
+
+          if (body.includes(authUser._id + '|' + algo.id)) {
+            dispatch(nextStep())
+            const id = _.get(message.headers, 'message-id', undefined)
+            client.ack(id, subscription.id )
           } else {
-            message.nack();
+            client.nack(id, subscription.id )
           }
         }
       );
@@ -62,7 +59,7 @@ export default function AlgorithmDetail() {
         client.disconnect(() => console.log("disconnected"));
       }
     };
-  }, [client, algo]);
+  }, [client, algo, authUser]);
 
   function renderDataPreparation(content) {
     return (

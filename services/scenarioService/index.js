@@ -14,3 +14,33 @@ export async function getScenario(data, config) {
     throw new Error(error);
   }
 }
+export async function getScenarioSample(data, config) {
+  try {
+    return await httpClient.get("/scenario/sample", data, config);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function getScenarioById(data, config) {
+  try {
+    return await httpClient.get(`/scenario/${data.id}`, data, config);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function deleteScenario(data, config) {
+  try {
+    return await httpClient.delete(`/scenario/${data.id}`, data, config);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+export async function updateScenario(data, config) {
+  try {
+    return await httpClient.put(`/scenario/${data.id}`, data, config);
+  } catch (error) {
+    throw new Error(error);
+  }
+}

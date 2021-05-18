@@ -63,10 +63,12 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "rheostat": "^4.1.0",
+    "sweetalert2": "^11.0.5",
     "url-loader": "^4.1.0",
     "url-search-params": "^1.1.0",
     "victory": "^34.0.0",
-    "webpack-bundle-analyzer": "^3.8.0"
+    "webpack-bundle-analyzer": "^3.8.0",
+    "ws": "^7.4.5"
   },
   "license": "ISC"
 }
