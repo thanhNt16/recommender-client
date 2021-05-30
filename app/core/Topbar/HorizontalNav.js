@@ -79,6 +79,13 @@ const HorizontalNav = () => {
             visualization
           </AppLink>
         </Menu.Item>
+        <Menu.Item key="Data manipulation">
+          <AppLink href="/data-manipulation">
+            <i className="icon icon-chart" />
+            {/* <IntlMessages id="sidebar.scenario" /> */}
+            Data manipulation
+          </AppLink>
+        </Menu.Item>
       </SubMenu>
     </Menu>
   );

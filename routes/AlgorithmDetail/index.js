@@ -42,8 +42,10 @@ export default function AlgorithmDetail() {
         (message) => {
           const body = message.body.toString()
           console.log("msg" , message.headers, message);
+          console.log("body" , body, authUser._id);
 
-          if (body.includes(authUser._id + '|' + algo.id)) {
+
+          if (body.includes(authUser._id)) {
             dispatch(nextStep())
             const id = _.get(message.headers, 'message-id', undefined)
             client.ack(id, subscription.id )

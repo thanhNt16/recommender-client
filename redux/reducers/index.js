@@ -5,6 +5,7 @@ import Upload from "./Upload";
 import Scenario from "./Scenario";
 import Visualization from "./Visualization";
 import DemoPage from "./DemoPage";
+import DataPage from "./DataPage";
 
 
 const reducers = combineReducers({
@@ -13,7 +14,8 @@ const reducers = combineReducers({
   upload: Upload,
   scenario: Scenario,
   visualization: Visualization,
-  demoPage: DemoPage
+  demoPage: DemoPage,
+  dataPage: DataPage
 });
 
 export default reducers;

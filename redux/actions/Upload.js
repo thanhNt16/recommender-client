@@ -36,7 +36,7 @@ export function uploadContent(options) {
       onSuccess("Upload success");
       dispatch(nextStep())
     } catch (error) {
-      message.error("Upload success");
+      message.error(error.message);
       onError(error.message);
     }
   };
@@ -59,7 +59,7 @@ export function uploadCollaborative(options, explicit) {
       onSuccess("Upload success");
       dispatch(nextStep())
     } catch (error) {
-      message.error("Upload success");
+      message.error(error.message);
       onError(error.message);
     }
   };
@@ -81,7 +81,7 @@ export function uploadSequence(options) {
       onSuccess("Upload success");
       dispatch(nextStep())
     } catch (error) {
-      message.error("Upload success");
+      message.error(error.message);
       onError(error.message);
     }
   };

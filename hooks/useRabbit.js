@@ -13,9 +13,9 @@ export function useRabbit() {
     //   return new WebSocket("ws://139.59.107.94:15674/ws");
     // });
    
-    var url = "wss://rabbit.recengine.games/ws";
+    // var url = "wss://rabbit.recengine.games/ws";
 
-    var stompClient = Stomp.client(url);
+    // var stompClient = Stomp.client(url);
     
     // var on_connect = function () {
     //   console.log("connected");
@@ -25,41 +25,73 @@ export function useRabbit() {
     // var on_error = function (error) {
     //   console.log("error", error);
     // };
-    var headers = {
-      login: 'rabbitmq',
-      passcode: 'rabbitmq',
-      // additional header
-      'client-id': 'rabbitmq'
-    };
-    stompClient.connect(headers, function () {
-      setClient(stompClient)
-      
+    var stompClient = Stomp.over(function () {
+      return new WebSocket("wss://rabbit.recengine.games/ws")
     });
+    
+    var on_connect = function () {
+      console.log("connected");
+      //   client.debug = null
+      setClient(stompClient);
+    };
+    var on_error = function (error) {
+      console.log("error", error);
+    };
+    stompClient.connect("rabbitmq", "rabbitmq", on_connect, on_error, "/");
     stompClient.debug = function (str) {};
-    stompClient.reconnectDelay = 3000;
+    stompClient.reconnectDelay = 300;
     stompClient.heartbeatIncoming = 5000;
     stompClient.heartbeatOutgoing = 5000;
+    // stompClient.onConnect(() => console.log('connected'))
+    stompClient.onDisconnect(() => {
+      console.log('disconnected')
+      var retryws = new WebSocket("wss://rabbit.recengine.games/ws");
+        stompClient = Stomp.over(retryws);
+        stompClient.connect("rabbitmq", "rabbitmq", on_connect, on_error, "/");
+        setClient(stompClient)
+    })
+    stompClient.onChangeState(function () {
+      if (window.ws.readyState === 2) {
+        var retryws = new WebSocket("wss://rabbit.recengine.games/ws");
+        stompClient = Stomp.over(retryws);
+        stompClient.connect("rabbitmq", "rabbitmq", on_connect, on_error, "/");
+      }
+    });
+    // var headers = {
+    //   login: 'rabbitmq',
+    //   passcode: 'rabbitmq',
+    //   // additional header
+    //   'client-id': 'rabbitmq'
+    // };
+    // stompClient.connect(headers, function () {
+    //   setClient(stompClient)
+      
+    // });
+    // stompClient.debug = function (str) {};
+    // stompClient.reconnectDelay = 3000;
+    // stompClient.heartbeatIncoming = 5000;
+    // stompClient.heartbeatOutgoing = 5000;
     
     // stompClient.onConnect(() => console.log('connected'))
     // stompClient.onDisconnect(() => console.log('disconnected'))
-    stompClient.onChangeState(function () {
-      if (window.ws.readyState === 2) {
-        var headers = {
-          login: 'rabbitmq',
-          passcode: 'rabbitmq',
-          // additional header
-          'client-id': 'rabbitmq'
-        };
-        stompClient.connect(headers, function () {
-          setClient(stompClient)
+    // stompClient.onChangeState(function () {
+    //   if (window.ws.readyState === 2) {
+    //     var headers = {
+    //       login: 'rabbitmq',
+    //       passcode: 'rabbitmq',
+    //       // additional header
+    //       'client-id': 'rabbitmq'
+    //     };
+    //     stompClient.connect(headers, function () {
+    //       setClient(stompClient)
           
-        });
-        stompClient.debug = function (str) {};
-        stompClient.reconnectDelay = 3000;
-        stompClient.heartbeatIncoming = 5000;
-        stompClient.heartbeatOutgoing = 5000;
-      }
-    });
+    //     });
+    //     stompClient.debug = function (str) {};
+    //     stompClient.reconnectDelay = 3000;
+    //     stompClient.heartbeatIncoming = 5000;
+    //     stompClient.heartbeatOutgoing = 5000;
+    //   }
+    // });
     return () => {
       console.log("unmount");
       // if (ws && ws.readyState === 1) ws.close();
