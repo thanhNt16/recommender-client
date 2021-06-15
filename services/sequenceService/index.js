@@ -9,6 +9,15 @@ export async function getSequence(data, config) {
     throw new Error(error);
   }
 }
+
+export async function countByItemId(data, config) {
+  try {
+    return await httpClient.get(`sequences/count-by-itemid`, {}, config);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function deleteSequence(data, config) {
   try {
     const { id } = data

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import _ from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
-import Chart from 'react-apexcharts'
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 import * as Actions from '../../redux/actions/Visualization'
+import CollaborativeLine from './components/collaborative-line'
 
 const options = {
     chart: {
@@ -16,7 +19,9 @@ const options = {
         // },
       }
     },
-    
+    dataLabels: {
+      enabled: false
+    },
     xaxis: {
       categories: [],
       position: 'bottom',
@@ -26,18 +31,18 @@ const options = {
       axisTicks: {
         show: false
       },
-      crosshairs: {
-        fill: {
-          type: 'gradient',
-          gradient: {
-            colorFrom: '#D8E3F0',
-            colorTo: '#BED1E6',
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5,
-          }
-        }
-      },
+      // crosshairs: {
+      //   fill: {
+      //     type: 'gradient',
+      //     gradient: {
+      //       colorFrom: '#D8E3F0',
+      //       colorTo: '#BED1E6',
+      //       stops: [0, 100],
+      //       opacityFrom: 0.4,
+      //       opacityTo: 0.5,
+      //     }
+      //   }
+      // },
       tooltip: {
         enabled: true,
       }
@@ -48,7 +53,7 @@ const options = {
       },
       axisTicks: {
         show: false,
-      },
+      }
     //   labels: {
     //     show: false,
     //     formatter: function (val) {
@@ -58,7 +63,7 @@ const options = {
     
     },
     title: {
-      text: '',
+      text: 'Top most interaction items',
     //   floating: true,
     //   offsetY: 330,
     //   align: 'center',
@@ -82,27 +87,26 @@ export default function Visualization() {
 
     useEffect(() => {
         dispatch(Actions.getSequence())
-
+        dispatch(Actions.getCollaborative())
     }, [])
 
 
     useEffect(() => {
         if (sequences && sequences.length !== 0) {
-            console.log('s', sequences)
             setSeries([
                 {
-                    name: 'Sequence',
-                    data: sequences.map(item => item.value)
+                    name: 'Interactions: ',
+                    data: sequences.map(item => item.count)
                 }
             ])
             setOption({
                 ...options,
                 title: {
-                    text: 'Top 10 most interaction items of month'
+                    text: 'Top most interaction items'
                 },
                 xaxis: {
                     ...options.xaxis,
-                    categories: sequences.map(item => item.category)
+                    categories: sequences.map(item => item._id)
                 }
 
             })
@@ -111,6 +115,7 @@ export default function Visualization() {
     return (
         <div>
             <Chart options={option} series={series} type="bar" />
+            <CollaborativeLine />
         </div>
     )
 }

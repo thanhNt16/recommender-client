@@ -6,7 +6,7 @@ import { SET_COLLABORATIVE, SET_SEQUENCES } from "../../constants/ActionTypes";
 export function getSequence() {
   return async (dispatch) => {
     try {
-      const sequence = await SequenceService.getSequence();
+      const sequence = await SequenceService.countByItemId();
       message.success("Get sequence success");
       // onSuccess("Upload success");
       dispatch({
@@ -22,7 +22,7 @@ export function getSequence() {
 export function getCollaborative() {
   return async (dispatch) => {
     try {
-      const collaborative = await CollaborativeService.getCollaborative();
+      const collaborative = await CollaborativeService.countByItemId();
       message.success("Get collaborative success");
       // onSuccess("Upload success");
       dispatch({

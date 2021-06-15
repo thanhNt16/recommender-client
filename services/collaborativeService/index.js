@@ -9,6 +9,13 @@ export async function getCollaborative(data, config) {
     throw new Error(error);
   }
 }
+export async function countByItemId(data, config) {
+  try {
+    return await httpClient.get(`collaboratives/count-by-itemid`, {}, config);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
 
 export async function deleteCollaborative(data, config) {
   try {

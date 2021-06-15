@@ -228,9 +228,10 @@ export default function DataManipulation() {
             initialValues={{ ...dataModal }}
             onFinishFailed={onFinishFailed}
             >
-                {dataModal && Object.keys(dataModal).map(item => {
+                {dataModal && Object.keys(dataModal).map((item, ind) => {
                     return (
                         <Form.Item
+                            key={ind}
                             label={item}
                             name={item}
                             rules={[{ required: true, message: `Please input your ${item}!` }]}
