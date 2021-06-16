@@ -45,10 +45,20 @@ const HorizontalNav = () => {
         key="main"
         title={<IntlMessages id="sidebar.main" />}
       >
-        <Menu.Item key="sample">
+        <Menu.Item key="main">
           <AppLink href="/main">
-            <i className="icon icon-crypto" />
-            <IntlMessages id="sidebar.main" />
+            <i className="icon icon-home" />
+            Algorithm Management
+            {/* <IntlMessages id="sidebar.main" /> */}
+
+          </AppLink>
+        </Menu.Item>
+        <Menu.Item key="rating-generator">
+          <AppLink href="/rating-generator">
+            <i className="icon icon-setting" />
+            Rating generator
+            {/* <IntlMessages id="sidebar.main" /> */}
+
           </AppLink>
         </Menu.Item>
       </SubMenu>
