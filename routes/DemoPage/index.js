@@ -82,17 +82,17 @@ export default function DemoPage() {
 
 
         <div style={{ display: 'flex', justifyContent: 'start', flexDirection: 'column' }}>
-          {page.algorithm === 'content' && items && items.similar_products.map((item, index) => {
+          {page.algorithm === 'content' && items && items.similar_products && items.similar_products.map((item, index) => {
             return <ProductItem key={index} product={{
               name: item.itemId, description: item.content
             }}/>
           })}
-           {page.algorithm === 'collaborative' && items && items.suggestion.map((item, index) => {
+           {page.algorithm === 'collaborative' && items && items.suggestion && items.suggestion.map((item, index) => {
             return <ProductItem key={index} product={{
               name: item.item_id, description: ''
             }}/>
           })}
-          {page.algorithm === 'sequence' && items && items.suggestion.map((item, index) => {
+          {page.algorithm === 'sequence' && items && items.suggestion && items.suggestion.map((item, index) => {
             return <ProductItem key={index} product={{
               name: item.id, description: ''
             }}/>
