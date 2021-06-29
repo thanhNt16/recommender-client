@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row, Typography } from "antd";
 import { getPageById } from "../../redux/actions/Page";
-import { getPopularRecommendation, getCollaborativeRecommendation, getContentRecommendation, getSequenceRecommendation } from "../../redux/actions/Recommend";
+import { getPopularRecommendation, getCollaborativeRecommendation, getContentRecommendation, getSequenceRecommendation, getDataByType } from "../../redux/actions/Recommend";
 import { useAuth } from "../../util/use-auth";
 import { useRouter } from "next/router";
 import ProductItem from '../../app/components/eCommerce/ProductItem'
@@ -16,6 +16,8 @@ export default function DemoPage() {
   const dispatch = useDispatch();
   const page = useSelector(({ demoPage }) => demoPage.page);
   const items = useSelector(({ demoPage }) => demoPage.items);
+  const demoData = useSelector(({ demoPage }) => demoPage.demoData);
+
 
 
   useEffect(() => {
@@ -27,12 +29,19 @@ export default function DemoPage() {
 
   useEffect(() => {
     if (page && authUser) {
-      console.log("page", page);
+      dispatch(getDataByType(page.algorithm, { skip: 0, limit: 10}))
+    }
+    
+  }, [page, authUser])
+
+  useEffect(() => {
+    if (page && authUser && demoData.length !== 0) {
+      console.log('demo', demoData)
       page.algorithm === "popular" &&
         dispatch(
           getPopularRecommendation({
             customer_id: authUser._id,
-            user_id: "linhkm2",
+            user_id: demoData[2].userId,
             top: 10,
           })
         );
@@ -40,7 +49,7 @@ export default function DemoPage() {
         dispatch(
           getContentRecommendation({
             customer_id: authUser._id,
-            item_id: "id",
+            item_id: demoData[0].itemId,
             top: 10,
           })
         );
@@ -48,7 +57,7 @@ export default function DemoPage() {
         dispatch(
           getCollaborativeRecommendation({
             customer_id: authUser._id,
-            user_id: "mailienphung1204",
+            user_id: demoData[0].userId,
             top: 10,
           })
         );
@@ -56,27 +65,42 @@ export default function DemoPage() {
         dispatch(
           getSequenceRecommendation({
             customer_id: authUser._id,
-            user_id: "1032468307128146",
+            user_id: demoData[2].userId,
             top: 10,
           })
         );
     }
-  }, [page, authUser]);
+  }, [page, authUser, demoData]);
   return <React.Fragment>
     {page ? <React.Fragment>
         <div style={{ display: 'flex', justifyContent: 'center'}}>
         <Title>{page.name}</Title>
         </div>
         {page.algorithm === 'popular' && <Title>Most popular items overtime: </Title>}
-        {page.algorithm === 'content' && <Title>Because you like it.Similar item you want to try: </Title>}
-        {page.algorithm === 'collaborative' && <Title>You may also like: </Title>}
-        {page.algorithm === 'sequence' && <Title>You may also like: </Title>}
+        {page.algorithm === 'content' && items && <Title>Because you like {items.current_product.content} <br />Similar items you want to try: </Title>}
+        {page.algorithm === 'collaborative' && items && <Title>Recomendation products for user {items.current_user.id}: </Title>}
+        {page.algorithm === 'sequence' && items && <Title>Personalized recomendation products for user {items.current_user.id}: </Title>}
 
 
         <div style={{ display: 'flex', justifyContent: 'start', flexDirection: 'column' }}>
-          {items && items.map((item, index) => {
+          {page.algorithm === 'content' && items && items.similar_products.map((item, index) => {
             return <ProductItem key={index} product={{
-              name: item, description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+              name: item.itemId, description: item.content
+            }}/>
+          })}
+           {page.algorithm === 'collaborative' && items && items.suggestion.map((item, index) => {
+            return <ProductItem key={index} product={{
+              name: item.item_id, description: ''
+            }}/>
+          })}
+          {page.algorithm === 'sequence' && items && items.suggestion.map((item, index) => {
+            return <ProductItem key={index} product={{
+              name: item.id, description: ''
+            }}/>
+          })}
+          {page.algorithm === 'popular' && items && items.map((item, index) => {
+            return <ProductItem key={index} product={{
+              name: item, description: ''
             }}/>
           })}
       </div>

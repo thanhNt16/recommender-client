@@ -30,6 +30,8 @@ export const SET_COLLABORATIVE = 'set_collaborative';
 //get page const
 export const SET_PAGE_DATA = 'set_page_data';
 export const SET_ITEMS = 'set_items';
+export const SET_DEMO_DATA = 'set_demo_data';
+
 
 //data manipulation
 export const SET_TYPE = 'set_type';

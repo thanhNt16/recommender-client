@@ -57,6 +57,7 @@ export default function AlgorithmDetail() {
     }
     return () => {
       if (client && window.ws && window.ws.readyState === 1) {
+        dispatch(resetStep())
         client.unsubscribe("/queue/status_queue");
         client.disconnect(() => console.log("disconnected"));
       }

@@ -6,7 +6,7 @@ import IntlMessages from "../../../util/IntlMessages";
 
 const ProductItem = ({product, grid}) => {
   const { name, description} = product;
-  const starValue = Math.round(Math.floor(Math.random() * 5))
+  const starValue = Math.round(Math.floor(Math.random() * 5) + 3)
   return (
     <div className={`gx-product-item  ${grid ? 'gx-product-vertical' : 'gx-product-horizontal'}`}>
       <div className="gx-product-image">

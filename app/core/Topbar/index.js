@@ -49,7 +49,7 @@ const Topbar = () => {
           />
         </div> : null}
       <Link href="/">
-        <img alt="" className="gx-d-block gx-d-lg-none gx-pointer" src={("/images/logo.png")}/></Link>
+        <img height="50px" width="50px" alt="" className="gx-d-block gx-d-lg-none gx-pointer" src={("/images/logo.png")}/></Link>
 
       <SearchBox styleName="gx-d-none gx-d-lg-block gx-lt-icon-search-bar-lg"
                  placeholder="Search in app..."
