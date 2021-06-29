@@ -21,11 +21,10 @@ export default function DemoPage() {
 
 
   useEffect(() => {
-    if (router.query.id) {
-      console.log(router.query.id);
+    if (router.query) {
       dispatch(getPageById({ id: router.query.id }));
     }
-  }, [router.query.id]);
+  }, [router.query]);
 
   useEffect(() => {
     if (page && authUser) {
