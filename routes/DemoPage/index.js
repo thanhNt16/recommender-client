@@ -77,8 +77,8 @@ export default function DemoPage() {
         </div>
         {page.algorithm === 'popular' && <Title>Most popular items overtime: </Title>}
         {page.algorithm === 'content' && items && <Title>Because you like {items.current_product.content} <br />Similar items you want to try: </Title>}
-        {page.algorithm === 'collaborative' && items && <Title>Recomendation products for user {items.current_user.id}: </Title>}
-        {page.algorithm === 'sequence' && items && <Title>Personalized recomendation products for user {items.current_user.id}: </Title>}
+        {page.algorithm === 'collaborative' && items && items.current_user && <Title>Recomendation products for user {items.current_user.id}: </Title>}
+        {page.algorithm === 'sequence' && items && items.current_user && <Title>Personalized recomendation products for user {items.current_user.id}: </Title>}
 
 
         <div style={{ display: 'flex', justifyContent: 'start', flexDirection: 'column' }}>

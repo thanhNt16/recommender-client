@@ -22,15 +22,15 @@ export default function tab3() {
   return (
     <div>
       <div>Step 3: View scenario</div>
-      {scenarios.map((item) => {
+      {scenarios.map((item, index) => {
         return (
-          <div>
+          <div key={index}>
             <div>Name: {item.name}</div>
             <div>page:</div>
             <Row>
               {item.page.map((p) => {
                 return (
-                  <Col xs={24} md={6}>
+                  <Col  key={p._id} xs={24} md={6}>
                     <PageCard id={p._id} key={p._id} name={p.name} algorithm={p.algorithm} />
                   </Col>
                 );
